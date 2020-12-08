@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.model.Car;
 import web.service.CarService;
+import web.service.CarServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class CarController {
+    private CarService carService = new CarServiceImpl();
 
     @GetMapping(value = "/cars")
     public String printCars(ModelMap model, @RequestParam("count") int count) {
@@ -22,7 +24,7 @@ public class CarController {
         cars.add(new Car("Mercedes W223", "sedan", 230));
         cars.add(new Car("Lada Priora", "sedan", 180));
 
-        model.addAttribute("cars", CarService.getCarsByCount(cars, count));
+        model.addAttribute("cars", carService.getCarsByCount(cars, count));
 
         return "cars";
     }
